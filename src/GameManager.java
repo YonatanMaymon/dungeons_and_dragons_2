@@ -1,5 +1,4 @@
 import backend.Tiles.Player;
-import backend.Tiles.PlayerTypes.Warrior;
 import backend.gameLogic.UnitFactory;
 import enums.GAME_STATE;
 import backend.gameLogic.LevelMap;
@@ -22,16 +21,26 @@ public class GameManager {
     public void game_loop(){
         try {
             UnitFactory unitFactory = new UnitFactory();
-            Player player = unitFactory.get_player(0);
+            int playerNum = 0;
+            try {
+                playerNum = InterfaceManager.choose_character(unitFactory.listPlayers());
+            }catch (RuntimeException e){
+                AlertsHandler.print_exception(e);
+                game_loop();
+            }
+            Player player = unitFactory.get_player(playerNum);
             LevelMap map = new LevelMap
                     (_level, player, InterfaceManager::print_combat_log);
             map.loudMap();
-            while (_gameState == GAME_STATE.GAME_PLAYING){
-                map.update();
+            while (_gameState != GAME_STATE.GAME_OVER){
+                if (_gameState == GAME_STATE.GAME_PLAYING)
+                    map.update();
+                else if (_gameState == GAME_STATE.CHARACTER_SELECTION) {
+
+                }
             }
         } catch (IOException e) {
             AlertsHandler.on_level_map_file_corruption(_level);
-            return;
         }
     }
 

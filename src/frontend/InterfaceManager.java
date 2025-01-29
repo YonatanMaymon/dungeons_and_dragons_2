@@ -1,11 +1,16 @@
 package frontend;
 
+import backend.Tiles.Player;
 import backend.Tiles.Tile;
 import data_records.BattleData;
 
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+
 public class InterfaceManager {
 
-    static void sleep(){
+    public static void sleep(){
         try{
             Thread.sleep(1500);
         }catch (InterruptedException e){
@@ -16,13 +21,28 @@ public class InterfaceManager {
     static void println(String string){System.out.println(string);}
     static void printSeparatingLine(){println("--------------------------------------------------------------------------");}
 
-    public static void print_map(char [][] map){
-        for (char[] chars : map) {
-            for (char aChar : chars) {
-                System.out.print(aChar);
-            }
-            println("");
+    public static int choose_character(List<Player> playerList){
+        println("--CHARACTER SELECTION--");
+        printSeparatingLine();
+        int i = 0;
+        for (Player player : playerList){
+            String sb = i + "- "+player.get_name() + "- Health: " +
+                    player.health.get_resource_pool() +
+                    ", Attack: " +
+                    player.get_attackPoints() +
+                    ", Defence: " +
+                    player.get_defencePoints();
+            println(sb);
+            i++;
         }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter character number");
+        if (!scanner.hasNextInt())
+               throw new InputMismatchException("must enter a number!");
+        int num = scanner.nextInt();
+        if (num >i || num<0)
+            throw new IndexOutOfBoundsException("player index must be between 0 and " + i);
+        return num;
     }
     public static void print_map(Tile[][] map){
         for (Tile[] tiles : map) {
