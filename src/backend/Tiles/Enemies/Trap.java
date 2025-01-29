@@ -3,15 +3,14 @@ package backend.Tiles.Enemies;
 import backend.Tiles.Player;
 import backend.Tiles.Visitor;
 import backend.gameLogic.Position;
-import interfaces.OnDeathCallBack;
 
 public class Trap extends Enemy{
     private int _visibilityTime;
     private int _invisibilityTime;
     private int _tickCount;
     private boolean visible;
-    public Trap(String name, String description, Position position, char tile, int healthPool, int attackPoints, int defencePoints, int visibilityTime,int invisibilityTime) {
-        super(name, description, position, tile, healthPool, attackPoints, defencePoints);
+    public Trap(char tile,String name, int healthPool, int attackPoints, int defencePoints, int exp_value, int visibilityTime,int invisibilityTime) {
+        super( tile, name,  healthPool, attackPoints, defencePoints, exp_value);
         _visibilityTime = visibilityTime;
         _invisibilityTime = invisibilityTime;
     }

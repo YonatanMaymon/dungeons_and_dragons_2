@@ -18,7 +18,7 @@ public class Interact implements Visitor {
         if (enemy.status == UNIT_STATUS.DEAD )
             map.change_positions(interactor,enemy.get_position());
         else if (interactor instanceof Player) {
-            map.onCombat.execute(enemy.on_attack(interactor));
+            map.onCombat.accept(enemy.on_attack(interactor));
 
             if (enemy.status == UNIT_STATUS.DEAD )
                 map.change_positions(interactor,enemy.get_position());
@@ -38,7 +38,7 @@ public class Interact implements Visitor {
     @Override
     public void visit_player(Player player) {
         if (interactor instanceof Enemy)
-            map.onCombat.execute(player.on_attack(interactor));
+            map.onCombat.accept(player.on_attack(interactor));
     }
 
     @Override

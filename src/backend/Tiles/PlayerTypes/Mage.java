@@ -2,7 +2,6 @@ package backend.Tiles.PlayerTypes;
 
 import backend.Tiles.Player;
 import backend.gameLogic.resources.Mana;
-import interfaces.OnDeathCallBack;
 
 public class Mage extends Player {
     Mana mana;
@@ -10,8 +9,8 @@ public class Mage extends Player {
     int _spell_power;
     int _hits_count;
     int _ability_range;
-    public Mage(String name, String description,  int _ability_range, int _hits_count, int _spell_power, int mana_pool, int _mana_cost, int healthPool, int attackPoints, int defencePoints) {
-        super(name, description, healthPool, attackPoints, defencePoints);
+    public Mage(String name, int healthPool, int attackPoints, int defencePoints, int mana_pool, int _mana_cost, int _hits_count, int _spell_power, int _ability_range) {
+        super(name, healthPool, attackPoints, defencePoints);
         this.mana = new Mana(mana_pool);
         this._mana_cost = _mana_cost;
         this._spell_power = _spell_power;

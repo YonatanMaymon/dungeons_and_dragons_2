@@ -11,14 +11,13 @@ import java.util.Random;
 public class Unit extends Tile{
     public UNIT_STATUS status = UNIT_STATUS.ALIVE;
     private final String _name;
-    private final String _description;
     public Health health;
     private int _attackPoints;
     private int _defencePoints;
-    public Unit(String name, String _description, Position position, char tile, int healthPool, int attackPoints, int defencePoints) {
-        super(position, tile);
+
+    public Unit(String name, char tile, int healthPool, int attackPoints, int defencePoints) {
+        super( tile);
         this._name =name;
-        this._description = _description;
         this.health = new Health(healthPool);
         this._attackPoints = attackPoints;
         this._defencePoints = defencePoints;
@@ -76,5 +75,4 @@ public class Unit extends Tile{
     }
 
     public String get_name() {return _name;}
-    public String get_description(){return _description;}
 }

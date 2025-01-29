@@ -2,13 +2,12 @@ package backend.Tiles.PlayerTypes;
 
 import backend.Tiles.Player;
 import backend.gameLogic.resources.Cooldown;
-import interfaces.OnDeathCallBack;
 
 public class Warrior extends Player {
     Cooldown _ability_cooldown;
 
-    public Warrior(String name, String description, int ability_cooldown, int healthPool, int attackPoints, int defencePoints) {
-        super(name, description,healthPool, attackPoints, defencePoints);
+    public Warrior(String name, int healthPool, int attackPoints, int defencePoints, int ability_cooldown) {
+        super(name, healthPool, attackPoints, defencePoints);
         this._ability_cooldown = new Cooldown(ability_cooldown);
     }
 

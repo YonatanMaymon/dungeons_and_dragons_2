@@ -5,12 +5,11 @@ import backend.Tiles.Visitor;
 import backend.Util;
 import backend.gameLogic.Position;
 import enums.DIRECTION;
-import interfaces.OnDeathCallBack;
 
 public class Monster extends Enemy {
     int _vision_range;
-    public Monster(String name, String description,  int _vision_range, Position position, char tile, int healthPool, int attackPoints, int defencePoints) {
-        super(name, description,  position, tile, healthPool, attackPoints, defencePoints);
+    public Monster(char tile,String name, int healthPool, int attackPoints, int defencePoints, int _vision_range, int exp_value) {
+        super(tile, name,  healthPool, attackPoints, defencePoints, exp_value);
         this._vision_range = _vision_range;
     }
 

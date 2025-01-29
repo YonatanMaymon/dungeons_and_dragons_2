@@ -3,13 +3,12 @@ package backend.Tiles;
 import backend.Util;
 import backend.gameLogic.Position;
 import enums.DIRECTION;
-import interfaces.OnDeathCallBack;
 
 public class Player extends Unit{
     int _xp;
     int _lvl;
-    public Player(String name, String description, int healthPool, int attackPoints, int defencePoints) {
-        super(name,description,new Position(0,0), '@', healthPool, attackPoints, defencePoints);
+    public Player(String name, int healthPool, int attackPoints, int defencePoints) {
+        super(name, '@', healthPool, attackPoints, defencePoints);
         this._lvl = 1;
         this._xp = 0;
     }

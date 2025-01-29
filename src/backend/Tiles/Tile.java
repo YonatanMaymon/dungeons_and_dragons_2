@@ -5,6 +5,9 @@ import backend.gameLogic.Position;
 public class Tile {
     private char _tile;
     Position _position;
+    public Tile( char tile){
+        this._tile = tile;
+    }
     public Tile(Position position, char tile){
         this._position = position;
         this._tile = tile;
@@ -13,7 +16,7 @@ public class Tile {
         visitor.visit_tile(this);
     }
 
-    public char get_tile() {
+    public Character get_tile() {
         return _tile;
     }
 
@@ -26,4 +29,5 @@ public class Tile {
     public void set_position(Position _position) {
         this._position = _position;
     }
+
 }

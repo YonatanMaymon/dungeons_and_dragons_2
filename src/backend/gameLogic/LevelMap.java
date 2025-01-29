@@ -5,23 +5,24 @@ import backend.Tiles.Player;
 import backend.Tiles.Tile;
 import backend.Tiles.Unit;
 import backend.Tiles.Wall;
+import data_records.BattleData;
 import frontend.InterfaceManager;
 import frontend.UI;
-import interfaces.OnCombatCallback;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class LevelMap extends MapManager {
     UnitMovement unitMovement = new UnitMovement(this);
-    public OnCombatCallback onCombat;
+    public Consumer<BattleData> onCombat;
     private String file_dir = "levels_dir\\levels_dir\\level";
     int num_col=0;
     int num_row=0;
     TileMap tileMap;
 
-    public LevelMap(int level, Player player, OnCombatCallback onCombat) throws IOException {
+    public LevelMap(int level, Player player, Consumer<BattleData> onCombat) throws IOException {
         super(player);
         file_dir+=level+ ".txt";
         BufferedReader reader = new BufferedReader(new FileReader(file_dir));

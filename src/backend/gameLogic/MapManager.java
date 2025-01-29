@@ -12,6 +12,7 @@ public class MapManager {
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<Wall> walls = new ArrayList<>();
     public Player player;
+    private UnitFactory unitFactory = new UnitFactory();
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
@@ -28,17 +29,11 @@ public class MapManager {
                 player.set_position(position);
             case '#'->walls.add(new Wall(position));
             case '.'->{}
-            default->
-                enemies.add(new Monster(
-                        "meaw",
-                        "desc",
-                        4,
-                        position,
-                        object,
-                        20,
-                        10,
-                        5
-                ));
+            default-> {
+                Enemy enemy = unitFactory.get_enemy(object);
+                enemy.set_position(position);
+                enemies.add(enemy);
+            }
         }
     }
 }

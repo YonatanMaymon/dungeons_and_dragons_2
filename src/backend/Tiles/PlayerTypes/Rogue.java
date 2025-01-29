@@ -2,13 +2,12 @@ package backend.Tiles.PlayerTypes;
 
 import backend.Tiles.Player;
 import backend.gameLogic.resources.Energy;
-import interfaces.OnDeathCallBack;
 
 public class Rogue extends Player {
     int _cost;
     Energy energy;
-    public Rogue(String name, String description, int _cost, int healthPool, int attackPoints, int defencePoints) {
-        super(name, description, healthPool, attackPoints, defencePoints);
+    public Rogue(String name,  int healthPool, int attackPoints, int defencePoints, int _cost) {
+        super(name,  healthPool, attackPoints, defencePoints);
         this._cost = _cost;
         energy = new Energy();
     }

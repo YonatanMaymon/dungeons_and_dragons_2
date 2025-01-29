@@ -1,4 +1,6 @@
+import backend.Tiles.Player;
 import backend.Tiles.PlayerTypes.Warrior;
+import backend.gameLogic.UnitFactory;
 import enums.GAME_STATE;
 import backend.gameLogic.LevelMap;
 import frontend.AlertsHandler;
@@ -19,15 +21,8 @@ public class GameManager {
 
     public void game_loop(){
         try {
-            Warrior player = new Warrior
-                (
-                    "yosi",
-                    "description",
-                    5,
-                    100,
-                    20,
-                    5
-                );
+            UnitFactory unitFactory = new UnitFactory();
+            Player player = unitFactory.get_player(0);
             LevelMap map = new LevelMap
                     (_level, player, InterfaceManager::print_combat_log);
             map.loudMap();
