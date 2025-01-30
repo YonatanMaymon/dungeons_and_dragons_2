@@ -9,7 +9,7 @@ import backend.Tiles.Wall;
 import java.util.ArrayList;
 
 public class MapManager {
-    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    protected ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<Wall> walls = new ArrayList<>();
     public Player player;
     private UnitFactory unitFactory = new UnitFactory();

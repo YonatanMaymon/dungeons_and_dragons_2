@@ -19,12 +19,13 @@ public class LevelMap extends MapManager {
     UnitMovement unitMovement = new UnitMovement(this);
     public Consumer<BattleData> onCombat;
     public Consumer<AbilityUseData> onAbilityUse;
+    public Consumer<String> onDeath;
     private String file_dir = "levels_dir\\levels_dir\\level";
     int num_col=0;
     int num_row=0;
     TileMap tileMap;
 
-    public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse) throws IOException {
+    public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath) throws IOException {
         super(player);
         file_dir+=level+ ".txt";
         BufferedReader reader = new BufferedReader(new FileReader(file_dir));
@@ -36,6 +37,7 @@ public class LevelMap extends MapManager {
         tileMap = new TileMap(num_row,num_col);
         this.onCombat = onCombat;
         this.onAbilityUse = onAbilityUse;
+        this.onDeath = onDeath;
     }
 
     public void loudMap() throws IOException {
@@ -64,9 +66,15 @@ public class LevelMap extends MapManager {
         player.update();
         player.accept(unitMovement);
 
-        for (Enemy enemy: getEnemies()){
+        for (Enemy enemy: enemies){
             enemy.update();
             enemy.accept(unitMovement);
+            if (!enemy.isAlive){
+                Position position = enemy.get_position();
+                onDeath.accept(enemy.get_name());
+                tileMap.map[position.get_y()][position.get_x()] = new Tile(position,'.');
+                enemies.remove(enemy);
+            }
         }
     }
 

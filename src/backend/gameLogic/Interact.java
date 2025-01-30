@@ -4,7 +4,6 @@ import backend.Tiles.*;
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
-import enums.UNIT_STATUS;
 
 public class Interact implements Visitor {
     LevelMap map;

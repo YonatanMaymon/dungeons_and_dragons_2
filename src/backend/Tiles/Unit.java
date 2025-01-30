@@ -5,6 +5,7 @@ import backend.gameLogic.resources.Health;
 import backend.gameLogic.Position;
 import data_records.BattleData;
 import enums.DIRECTION;
+import event_handler.EventManager;
 
 public class Unit extends Tile{
     public boolean isAlive = true;

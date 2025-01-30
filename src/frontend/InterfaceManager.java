@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class InterfaceManager {
 
+
     public static void sleep(){
         try{
             Thread.sleep(1500);
@@ -71,11 +72,10 @@ public class InterfaceManager {
         println(bd.defender() + " remaining health: " + bd.remainingHealth());
         printSeparatingLine();
         sleep();
-//        if (bd.remainingHealth() ==0)
-//            kill_msg(bd.defender());
     }
 
     public static void kill_msg(String name){
+        printSeparatingLine();
         println(name + " has been slayed");
         printSeparatingLine();
         sleep();

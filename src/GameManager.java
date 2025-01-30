@@ -2,6 +2,7 @@ import backend.Tiles.Player;
 import backend.gameLogic.UnitFactory;
 import enums.GAME_STATE;
 import backend.gameLogic.LevelMap;
+import event_handler.EventManager;
 import frontend.AlertsHandler;
 import frontend.InterfaceManager;
 
@@ -13,7 +14,6 @@ public class GameManager {
     int _level;
 
     public GameManager() {
-//        _gameState = GAME_STATE.CHARACTER_SELECTION;
         _gameState = GAME_STATE.GAME_PLAYING; // remove past testing
         _level = 1;
     }
@@ -34,15 +34,13 @@ public class GameManager {
                         _level,
                         player,
                         InterfaceManager::print_combat_log,
-                        InterfaceManager::print_ability_use_log
+                        InterfaceManager::print_ability_use_log,
+                        InterfaceManager::kill_msg
                     );
             map.loudMap();
             while (_gameState != GAME_STATE.GAME_OVER){
                 if (_gameState == GAME_STATE.GAME_PLAYING)
                     map.update();
-                else if (_gameState == GAME_STATE.CHARACTER_SELECTION) {
-
-                }
             }
         } catch (IOException e) {
             AlertsHandler.on_level_map_file_corruption(_level);
