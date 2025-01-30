@@ -2,6 +2,7 @@ package frontend;
 
 import backend.Tiles.Player;
 import backend.Tiles.Tile;
+import data_records.AbilityUseData;
 import data_records.BattleData;
 
 import java.util.InputMismatchException;
@@ -19,10 +20,11 @@ public class InterfaceManager {
     }
 
     static void println(String string){System.out.println(string);}
+    static void println_dashed(String string){System.out.println("--"+string+"--");}
     static void printSeparatingLine(){println("--------------------------------------------------------------------------");}
 
     public static int choose_character(List<Player> playerList){
-        println("--CHARACTER SELECTION--");
+        println_dashed("CHARACTER SELECTION");
         printSeparatingLine();
         int i = 0;
         for (Player player : playerList){
@@ -52,6 +54,14 @@ public class InterfaceManager {
             println("");
         }
     }
+    public static void print_ability_use_log(AbilityUseData data){
+        printSeparatingLine();
+        println("you casted " + data.name());
+        for(String name: data.damageMap().keySet()){
+            println_dashed(name+" got hit for " + data.damageMap().get(name));
+        }
+        sleep();
+    }
     public static void print_combat_log(BattleData bd){
         printSeparatingLine();
         println(bd.attacker() + " is attacking "+bd.defender());
@@ -61,8 +71,8 @@ public class InterfaceManager {
         println(bd.defender() + " remaining health: " + bd.remainingHealth());
         printSeparatingLine();
         sleep();
-        if (bd.remainingHealth() ==0)
-            kill_msg(bd.defender());
+//        if (bd.remainingHealth() ==0)
+//            kill_msg(bd.defender());
     }
 
     public static void kill_msg(String name){

@@ -1,11 +1,9 @@
 package backend.gameLogic;
 
 import backend.Tiles.*;
-import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
 import enums.UNIT_STATUS;
-import frontend.Debug;
 import frontend.UI;
 
 public class UnitMovement implements Visitor {
@@ -15,7 +13,7 @@ public class UnitMovement implements Visitor {
         this.map = levelMap;
     }
 
-    boolean is_dead(Unit unit){return unit.status == UNIT_STATUS.DEAD;}
+    boolean is_dead(Unit unit){return !unit.isAlive;}
 
     @Override
     public void visit_monster(Monster monster) {

@@ -15,12 +15,12 @@ public class Interact implements Visitor {
     }
 
     void visit_enemy(Enemy enemy){
-        if (enemy.status == UNIT_STATUS.DEAD )
+        if (!enemy.isAlive )
             map.change_positions(interactor,enemy.get_position());
         else if (interactor instanceof Player) {
             map.onCombat.accept(enemy.on_attack(interactor));
 
-            if (enemy.status == UNIT_STATUS.DEAD )
+            if (!enemy.isAlive)
                 map.change_positions(interactor,enemy.get_position());
         }
     }

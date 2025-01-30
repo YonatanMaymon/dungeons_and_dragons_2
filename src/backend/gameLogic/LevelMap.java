@@ -5,6 +5,7 @@ import backend.Tiles.Player;
 import backend.Tiles.Tile;
 import backend.Tiles.Unit;
 import backend.Tiles.Wall;
+import data_records.AbilityUseData;
 import data_records.BattleData;
 import frontend.InterfaceManager;
 import frontend.UI;
@@ -17,12 +18,13 @@ import java.util.function.Consumer;
 public class LevelMap extends MapManager {
     UnitMovement unitMovement = new UnitMovement(this);
     public Consumer<BattleData> onCombat;
+    public Consumer<AbilityUseData> onAbilityUse;
     private String file_dir = "levels_dir\\levels_dir\\level";
     int num_col=0;
     int num_row=0;
     TileMap tileMap;
 
-    public LevelMap(int level, Player player, Consumer<BattleData> onCombat) throws IOException {
+    public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse) throws IOException {
         super(player);
         file_dir+=level+ ".txt";
         BufferedReader reader = new BufferedReader(new FileReader(file_dir));
@@ -33,6 +35,7 @@ public class LevelMap extends MapManager {
         }
         tileMap = new TileMap(num_row,num_col);
         this.onCombat = onCombat;
+        this.onAbilityUse = onAbilityUse;
     }
 
     public void loudMap() throws IOException {
@@ -47,7 +50,8 @@ public class LevelMap extends MapManager {
             j++;
         }
         reader.close();
-
+        player.setOnAbilityUse(onAbilityUse);
+        player.setEnemies(getEnemies());
         for (Wall wall : getWalls()){tileMap.loud_tile_on_map(wall);}
         for (Enemy enemy : getEnemies()){tileMap.loud_tile_on_map(enemy);}
         tileMap.loud_tile_on_map(player);

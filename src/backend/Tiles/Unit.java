@@ -1,15 +1,13 @@
 package backend.Tiles;
 
+import backend.Util;
 import backend.gameLogic.resources.Health;
 import backend.gameLogic.Position;
 import data_records.BattleData;
 import enums.DIRECTION;
-import enums.UNIT_STATUS;
-
-import java.util.Random;
 
 public class Unit extends Tile{
-    public UNIT_STATUS status = UNIT_STATUS.ALIVE;
+    public boolean isAlive = true;
     private final String _name;
     public Health health;
     private int _attackPoints;
@@ -43,17 +41,20 @@ public class Unit extends Tile{
 
 
     void on_death(){
-        status = UNIT_STATUS.DEAD;
+        isAlive = false;
         set_tile('.');
     }
 
-    public BattleData on_attack(Unit attacker){
-       Random random = new Random();
-        int attackRoll = random.nextInt(attacker.get_attackPoints());
-        int defenceRoll = random.nextInt(get_defencePoints());
-        int damageTaken = Math.max(0,attackRoll-defenceRoll);
-        health.take_damage(damageTaken);
+    public void take_damage(int damage){
+        health.take_damage(damage);
         if (health.get_resource_amount() <= 0){on_death();}
+    }
+
+    public BattleData on_attack(Unit attacker){
+        int attackRoll = Util.roll(attacker.get_attackPoints());
+        int defenceRoll = Util.roll(get_defencePoints());
+        int damageTaken = Math.max(0,attackRoll-defenceRoll);
+        take_damage(damageTaken);
         return new BattleData
                 (attacker.get_name(),get_name(),attackRoll,defenceRoll, health.get_resource_amount());
     }

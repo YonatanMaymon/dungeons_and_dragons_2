@@ -12,6 +12,7 @@ public class Util {
             case 's' -> DIRECTION.DOWN;
             case 'w' -> DIRECTION.UP;
             case 'q' -> DIRECTION.STAY;
+            case 'e' -> DIRECTION.CAST_ABILITY;
             default -> null;
         };
     }
@@ -19,5 +20,9 @@ public class Util {
         Random random = new Random();
         int randomNum = random.nextInt(0,4);
         return DIRECTION.class.getEnumConstants()[randomNum];
+    }
+    public static int roll(int rollStat){
+        Random random = new Random();
+        return random.nextInt(rollStat);
     }
 }

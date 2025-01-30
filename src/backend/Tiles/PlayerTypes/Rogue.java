@@ -1,7 +1,15 @@
 package backend.Tiles.PlayerTypes;
 
+import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Player;
+import backend.Util;
 import backend.gameLogic.resources.Energy;
+import data_records.AbilityUseData;
+import enums.UNIT_STATUS;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Rogue extends Player {
     int _cost;
@@ -28,7 +36,14 @@ public class Rogue extends Player {
     @Override
     public void on_ability_cast() {
         energy.supplement_resource(_cost);
-        /*For each enemy within range < 2, deal damage (reduce health value) equals to the rogue’s
-        attack points (each enemy will try to defend itself)*/
+        ArrayList<Enemy> hitList = getHitList(2);
+        Map<String,Integer> damageMap = new HashMap<>();
+        for(Enemy enemy :hitList){
+            int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());
+            enemy.take_damage(damage);
+            damageMap.put(enemy.get_name(),damage);
+        }
+        onAbilityUse.accept(new AbilityUseData("fan of knives",damageMap));
+
     }
 }

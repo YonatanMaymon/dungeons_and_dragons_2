@@ -30,7 +30,12 @@ public class GameManager {
             }
             Player player = unitFactory.get_player(playerNum);
             LevelMap map = new LevelMap
-                    (_level, player, InterfaceManager::print_combat_log);
+                    (
+                        _level,
+                        player,
+                        InterfaceManager::print_combat_log,
+                        InterfaceManager::print_ability_use_log
+                    );
             map.loudMap();
             while (_gameState != GAME_STATE.GAME_OVER){
                 if (_gameState == GAME_STATE.GAME_PLAYING)

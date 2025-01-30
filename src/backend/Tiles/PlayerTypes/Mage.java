@@ -1,7 +1,15 @@
 package backend.Tiles.PlayerTypes;
 
+import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Player;
+import backend.Util;
 import backend.gameLogic.resources.Mana;
+import data_records.AbilityUseData;
+import enums.UNIT_STATUS;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Mage extends Player {
     Mana mana;
@@ -38,13 +46,19 @@ public class Mage extends Player {
 
     @Override
     public void on_ability_cast() {
-        mana.supplement_resource(_mana_cost);
-        /*(hits < hits count) ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
-        - Select random enemy within ability range.
-        - Deal damage (reduce health value) to the chosen enemy for an amount equal to spell power
-        (each enemy may try to defend itself).
-        - hits ← hits + 1
-        */
+        int hits = 0;
+        ArrayList<Enemy> hitList = getHitList(_ability_range);
+        Map<String,Integer> damageMap = new HashMap<>();
+        while(hits<_hits_count && !hitList.isEmpty()){
+            Enemy enemyToAttack = get_random_enemy(hitList);
 
+            int damage = _spell_power - Util.roll(enemyToAttack.get_defencePoints());
+            enemyToAttack.take_damage(damage);
+            if (!enemyToAttack.isAlive) hitList.remove(enemyToAttack);
+            damageMap.put(enemyToAttack.get_name(),damage);
+            hits++;
+        }
+        onAbilityUse.accept(new AbilityUseData("Blizzard",damageMap));
+        mana.supplement_resource(_mana_cost);
     }
 }

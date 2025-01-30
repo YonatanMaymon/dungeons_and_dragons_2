@@ -1,14 +1,9 @@
 package frontend;
 
-import event_handler.EventManager;
 
 import java.util.Scanner;
 
 public class UI {
-    EventManager eventManager;
-    public UI(){
-        eventManager = EventManager.getInstance();
-    }
 
     public static void print_ui(){
         System.out.println("ui");

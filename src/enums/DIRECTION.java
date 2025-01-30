@@ -5,5 +5,6 @@ public enum DIRECTION {
     DOWN,
     LEFT,
     RIGHT,
-    STAY
+    STAY,
+    CAST_ABILITY
 }
