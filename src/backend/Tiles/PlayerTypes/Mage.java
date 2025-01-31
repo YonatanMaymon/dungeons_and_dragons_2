@@ -27,6 +27,11 @@ public class Mage extends Player {
     }
 
     @Override
+    public Map<String, Integer> accept(PlayersVisitor visitor) {
+        return visitor.visit_mage(this);
+    }
+
+    @Override
     public void on_lvl_up(){
         super.on_lvl_up();
         mana.increase_mana_pool(25*get_lvl());

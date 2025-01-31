@@ -4,6 +4,7 @@ import backend.Tiles.Player;
 import backend.Tiles.Tile;
 import data_records.AbilityUseData;
 import data_records.BattleData;
+import data_records.MapAndStats;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -47,14 +48,12 @@ public class InterfaceManager {
             throw new IndexOutOfBoundsException("player index must be between 0 and " + i);
         return num;
     }
-    public static void print_map(Tile[][] map){
-        for (Tile[] tiles : map) {
-            for (Tile tile : tiles) {
-                System.out.print(tile.get_tile());
-            }
-            println("");
-        }
+
+    public static void print_map_and_stats(MapAndStats mapAndStats){
+        println(mapAndStats.map());
+        UI.print_stats(mapAndStats.stats());
     }
+
     public static void print_ability_use_log(AbilityUseData data){
         printSeparatingLine();
         println("you casted " + data.name());

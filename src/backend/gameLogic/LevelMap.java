@@ -2,17 +2,18 @@ package backend.gameLogic;
 
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Player;
+import backend.Tiles.PlayerTypes.PlayerStatExtractor;
 import backend.Tiles.Tile;
 import backend.Tiles.Unit;
 import backend.Tiles.Wall;
 import data_records.AbilityUseData;
 import data_records.BattleData;
-import frontend.InterfaceManager;
-import frontend.UI;
+import data_records.MapAndStats;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class LevelMap extends MapManager {
@@ -20,12 +21,14 @@ public class LevelMap extends MapManager {
     public Consumer<BattleData> onCombat;
     public Consumer<AbilityUseData> onAbilityUse;
     public Consumer<String> onDeath;
+    public Consumer<MapAndStats> onMapAndStatsUpdate;
     private String file_dir = "levels_dir\\levels_dir\\level";
     int num_col=0;
     int num_row=0;
     TileMap tileMap;
+    private PlayerStatExtractor playerStatExtractor = new PlayerStatExtractor();
 
-    public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath) throws IOException {
+    public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath, Consumer<MapAndStats> onMapAndStatsUpdate) throws IOException {
         super(player);
         file_dir+=level+ ".txt";
         BufferedReader reader = new BufferedReader(new FileReader(file_dir));
@@ -38,6 +41,7 @@ public class LevelMap extends MapManager {
         this.onCombat = onCombat;
         this.onAbilityUse = onAbilityUse;
         this.onDeath = onDeath;
+        this.onMapAndStatsUpdate = onMapAndStatsUpdate;
     }
 
     public void loudMap() throws IOException {
@@ -60,21 +64,20 @@ public class LevelMap extends MapManager {
     }
 
     public void update(){
-        InterfaceManager.print_map(tileMap.map);
-        UI.print_ui();
-
+        Map<String, Integer> stats = player.accept(playerStatExtractor);
+        onMapAndStatsUpdate.accept(new MapAndStats(tileMap.to_string(),stats));
         player.update();
         player.accept(unitMovement);
 
         for (Enemy enemy: enemies){
-            enemy.update();
-            enemy.accept(unitMovement);
             if (!enemy.isAlive){
                 Position position = enemy.get_position();
                 onDeath.accept(enemy.get_name());
                 tileMap.map[position.get_y()][position.get_x()] = new Tile(position,'.');
                 enemies.remove(enemy);
             }
+            enemy.update();
+            enemy.accept(unitMovement);
         }
     }
 

@@ -13,6 +13,17 @@ public class TileMap {
         }
     }
 
+    public String to_string(){
+        StringBuilder flattenMap = new StringBuilder();
+        for (Tile[] tiles : map) {
+            for (Tile tile : tiles) {
+                flattenMap.append(tile.get_tile());
+            }
+            flattenMap.append('\n');
+        }
+        return flattenMap.toString();
+    }
+
     public void loud_tile_on_map(Tile tile){
         int x = tile.get_position().get_x();
         int y = tile.get_position().get_y();

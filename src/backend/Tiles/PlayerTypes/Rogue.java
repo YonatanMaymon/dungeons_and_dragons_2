@@ -21,6 +21,11 @@ public class Rogue extends Player {
     }
 
     @Override
+    public Map<String, Integer> accept(PlayersVisitor visitor) {
+        return visitor.visit_rogue(this);
+    }
+
+    @Override
     public void on_lvl_up() {
         super.on_lvl_up();
         energy.fill_resource();
@@ -37,6 +42,7 @@ public class Rogue extends Player {
     public void on_ability_cast() {
         energy.supplement_resource(_cost);
         ArrayList<Enemy> hitList = getHitList(2);
+        if (hitList.isEmpty()) return;
         Map<String,Integer> damageMap = new HashMap<>();
         for(Enemy enemy :hitList){
             int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());

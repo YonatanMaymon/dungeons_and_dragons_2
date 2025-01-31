@@ -2,7 +2,6 @@ import backend.Tiles.Player;
 import backend.gameLogic.UnitFactory;
 import enums.GAME_STATE;
 import backend.gameLogic.LevelMap;
-import event_handler.EventManager;
 import frontend.AlertsHandler;
 import frontend.InterfaceManager;
 
@@ -35,7 +34,8 @@ public class GameManager {
                         player,
                         InterfaceManager::print_combat_log,
                         InterfaceManager::print_ability_use_log,
-                        InterfaceManager::kill_msg
+                        InterfaceManager::kill_msg,
+                        InterfaceManager::print_map_and_stats
                     );
             map.loudMap();
             while (_gameState != GAME_STATE.GAME_OVER){

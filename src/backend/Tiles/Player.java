@@ -1,6 +1,8 @@
 package backend.Tiles;
 
 import backend.Tiles.Enemies.Enemy;
+import backend.Tiles.PlayerTypes.PlayerStatExtractor;
+import backend.Tiles.PlayerTypes.PlayersVisitor;
 import backend.Util;
 import backend.gameLogic.Position;
 import data_records.AbilityUseData;
@@ -8,6 +10,7 @@ import enums.DIRECTION;
 import enums.UNIT_STATUS;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -27,6 +30,7 @@ public class Player extends Unit{
     public void accept(Visitor visitor) {
         visitor.visit_player(this);
     }
+    public Map<String,Integer> accept(PlayersVisitor visitor){return null;}
 
     @Override
     void on_death() {
@@ -78,9 +82,11 @@ public class Player extends Unit{
         System.out.println("you dont have the resources to cast this ability");
     }
 
+    int get_xp_threshold(){return 50 * this._lvl;}
+
     public void gain_xp(int amount){
         this._xp += amount;
-        int xp_threshold = 50 * this._lvl;
+        int xp_threshold = get_xp_threshold();
         if (this._xp >=xp_threshold){
             this._xp -= xp_threshold;
             lvl_up();
@@ -100,4 +106,5 @@ public class Player extends Unit{
         return _lvl;
     }
 
+    public int get_xp_progress_percentage() {return 100 - (get_xp_threshold() - _xp) *100 /get_xp_threshold();}
 }

@@ -17,6 +17,11 @@ public class Warrior extends Player {
     }
 
     @Override
+    public Map<String, Integer> accept(PlayersVisitor visitor) {
+        return visitor.visit_warrior(this);
+    }
+
+    @Override
     public boolean has_resources_for_ability() {
         return ability_cooldown.get_cooldown() ==0;
     }
@@ -24,8 +29,8 @@ public class Warrior extends Player {
     @Override
     public void on_ability_cast(){
         int damage = health.get_resource_pool()/10;
-
         ArrayList<Enemy> hitList= getHitList(3);
+        if (hitList.isEmpty()) return;
         Enemy enemyToAttack = get_random_enemy(hitList);
         enemyToAttack.take_damage(damage);
         health.heal(10* this.get_defencePoints());
