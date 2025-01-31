@@ -1,9 +1,10 @@
-package backend.gameLogic;
+package backend.gameLogic.visitors;
 
 import backend.Tiles.*;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
-import enums.UNIT_STATUS;
+import backend.gameLogic.LevelMap;
+import backend.gameLogic.Position;
 import frontend.UI;
 
 public class UnitMovement implements Visitor {

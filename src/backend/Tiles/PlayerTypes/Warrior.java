@@ -2,7 +2,6 @@ package backend.Tiles.PlayerTypes;
 
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Player;
-import backend.gameLogic.Interact;
 import backend.gameLogic.resources.Cooldown;
 import data_records.AbilityUseData;
 

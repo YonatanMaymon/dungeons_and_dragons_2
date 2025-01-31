@@ -5,7 +5,7 @@ import backend.Tiles.Unit;
 import backend.gameLogic.Position;
 
 public abstract class Enemy extends Unit {
-    public int exp_value;
+    public final int exp_value;
     public Enemy(char tile ,String name, int healthPool, int attackPoints, int defencePoints, int exp_value) {
         super(name, tile, healthPool, attackPoints, defencePoints);
         this.exp_value = exp_value;

@@ -39,8 +39,12 @@ public class Rogue extends Player {
     }
 
     @Override
+    public boolean has_resources_for_ability() {
+        return energy.get_resource_amount() - _cost >=0;
+    }
+
+    @Override
     public void on_ability_cast() {
-        energy.supplement_resource(_cost);
         ArrayList<Enemy> hitList = getHitList(2);
         if (hitList.isEmpty()) return;
         Map<String,Integer> damageMap = new HashMap<>();
@@ -50,6 +54,6 @@ public class Rogue extends Player {
             damageMap.put(enemy.get_name(),damage);
         }
         onAbilityUse.accept(new AbilityUseData("fan of knives",damageMap));
-
+        energy.supplement_resource(_cost);
     }
 }

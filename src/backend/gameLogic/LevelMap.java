@@ -6,6 +6,7 @@ import backend.Tiles.PlayerTypes.PlayerStatExtractor;
 import backend.Tiles.Tile;
 import backend.Tiles.Unit;
 import backend.Tiles.Wall;
+import backend.gameLogic.visitors.UnitMovement;
 import data_records.AbilityUseData;
 import data_records.BattleData;
 import data_records.MapAndStats;
@@ -13,6 +14,7 @@ import data_records.MapAndStats;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -25,8 +27,8 @@ public class LevelMap extends MapManager {
     private String file_dir = "levels_dir\\levels_dir\\level";
     int num_col=0;
     int num_row=0;
-    TileMap tileMap;
-    private PlayerStatExtractor playerStatExtractor = new PlayerStatExtractor();
+    public TileMap tileMap;
+    private final PlayerStatExtractor playerStatExtractor = new PlayerStatExtractor();
 
     public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath, Consumer<MapAndStats> onMapAndStatsUpdate) throws IOException {
         super(player);
@@ -68,16 +70,20 @@ public class LevelMap extends MapManager {
         onMapAndStatsUpdate.accept(new MapAndStats(tileMap.to_string(),stats));
         player.update();
         player.accept(unitMovement);
-
+        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         for (Enemy enemy: enemies){
             if (!enemy.isAlive){
-                Position position = enemy.get_position();
                 onDeath.accept(enemy.get_name());
-                tileMap.map[position.get_y()][position.get_x()] = new Tile(position,'.');
-                enemies.remove(enemy);
+                player.gain_xp(enemy.exp_value);
+                enemiesToRemove.add(enemy);
             }
             enemy.update();
             enemy.accept(unitMovement);
+        }
+        for(Enemy enemy: enemiesToRemove){
+            Position position = enemy.get_position();
+            tileMap.map[position.get_y()][position.get_x()] = new Tile(position,'.');
+            enemies.remove(enemy);
         }
     }
 

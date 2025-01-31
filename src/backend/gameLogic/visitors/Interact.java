@@ -1,9 +1,10 @@
-package backend.gameLogic;
+package backend.gameLogic.visitors;
 
 import backend.Tiles.*;
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
+import backend.gameLogic.LevelMap;
 
 public class Interact implements Visitor {
     LevelMap map;
@@ -14,14 +15,7 @@ public class Interact implements Visitor {
     }
 
     void visit_enemy(Enemy enemy){
-        if (!enemy.isAlive )
-            map.change_positions(interactor,enemy.get_position());
-        else if (interactor instanceof Player) {
-            map.onCombat.accept(enemy.on_attack(interactor));
-
-            if (!enemy.isAlive)
-                map.change_positions(interactor,enemy.get_position());
-        }
+        interactor.accept(new InteractWithEnemy(map,enemy));
     }
 
     @Override
@@ -36,8 +30,7 @@ public class Interact implements Visitor {
 
     @Override
     public void visit_player(Player player) {
-        if (interactor instanceof Enemy)
-            map.onCombat.accept(player.on_attack(interactor));
+        interactor.accept(new InteractWithPlayer(map,player));
     }
 
     @Override
