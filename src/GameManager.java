@@ -1,4 +1,5 @@
 import backend.Tiles.Player;
+import backend.Util;
 import backend.gameLogic.UnitFactory;
 import enums.GAME_STATE;
 import backend.gameLogic.LevelMap;
@@ -9,58 +10,39 @@ import java.io.IOException;
 
 public class GameManager {
 
-    static GAME_STATE _gameState;
-    int _level;
-
-    public GameManager() {
-        _gameState = GAME_STATE.GAME_PLAYING; // remove past testing
-        _level = 1;
-    }
-
-    public void game_loop(){
+    public void game_loop() {
+        UnitFactory unitFactory = new UnitFactory();
+        int playerNum = 0;
         try {
-            UnitFactory unitFactory = new UnitFactory();
-            int playerNum = 0;
-            try {
-                playerNum = InterfaceManager.choose_character(unitFactory.listPlayers());
-            }catch (RuntimeException e){
-                AlertsHandler.print_exception(e);
-                game_loop();
-            }
-            Player player = unitFactory.get_player(playerNum);
+            playerNum = InterfaceManager.choose_character(unitFactory.listPlayers());
+        } catch (RuntimeException e) {
+            AlertsHandler.print_exception(e);
+            game_loop();
+        }
+        Player player = unitFactory.get_player(playerNum);
+        for (int level = 1; level < Util.get_max_lvl(); level++) {
+            tick_loop(level,player);
+        }
+    }
+    void tick_loop(int level, Player player){
+        try {
             LevelMap map = new LevelMap
                     (
-                        _level,
-                        player,
-                        InterfaceManager::print_combat_log,
-                        InterfaceManager::print_ability_use_log,
-                        InterfaceManager::kill_msg,
-                        InterfaceManager::print_map_and_stats
+                            level,
+                            player,
+                            InterfaceManager::print_combat_log,
+                            InterfaceManager::print_ability_use_log,
+                            InterfaceManager::kill_msg,
+                            InterfaceManager::print_map_and_stats
                     );
             map.loudMap();
-            while (_gameState != GAME_STATE.GAME_OVER){
-                if (_gameState == GAME_STATE.GAME_PLAYING)
-                    map.update();
+            while (map.levelPlaying){
+                map.update();
             }
+
         } catch (IOException e) {
-            AlertsHandler.on_level_map_file_corruption(_level);
+            AlertsHandler.on_level_map_file_corruption(level);
         }
     }
 
-
-    public int get_level() {
-        return _level;
-    }
-
-    public void set_level(int _level) {
-        this._level = _level;
-    }
-
-    public static GAME_STATE get_gameState() {
-        return _gameState;
-    }
-
-    public static void set_gameState(GAME_STATE _gameState) {
-        GameManager._gameState = _gameState;
-    }
 }

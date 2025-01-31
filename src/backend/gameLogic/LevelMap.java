@@ -24,16 +24,17 @@ public class LevelMap extends MapManager {
     public Consumer<AbilityUseData> onAbilityUse;
     public Consumer<String> onDeath;
     public Consumer<MapAndStats> onMapAndStatsUpdate;
-    private String file_dir = "levels_dir\\levels_dir\\level";
+    private String level_dir = LEVEL_FILE_DIR + "level";
     int num_col=0;
     int num_row=0;
     public TileMap tileMap;
     private final PlayerStatExtractor playerStatExtractor = new PlayerStatExtractor();
+    public boolean levelPlaying = true;
 
     public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath, Consumer<MapAndStats> onMapAndStatsUpdate) throws IOException {
         super(player);
-        file_dir+=level+ ".txt";
-        BufferedReader reader = new BufferedReader(new FileReader(file_dir));
+        level_dir+=level+ ".txt";
+        BufferedReader reader = new BufferedReader(new FileReader(level_dir));
         String line;
         while ((line = reader.readLine()) != null){
             num_col = Math.max(num_col, line.length());
@@ -47,7 +48,7 @@ public class LevelMap extends MapManager {
     }
 
     public void loudMap() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file_dir));
+        BufferedReader reader = new BufferedReader(new FileReader(level_dir));
         String line;
         int j = 0;
         while ((line = reader.readLine()) != null){
@@ -84,6 +85,9 @@ public class LevelMap extends MapManager {
             Position position = enemy.get_position();
             tileMap.map[position.get_y()][position.get_x()] = new Tile(position,'.');
             enemies.remove(enemy);
+        }
+        if (enemies.isEmpty()){
+            levelPlaying = false;
         }
     }
 

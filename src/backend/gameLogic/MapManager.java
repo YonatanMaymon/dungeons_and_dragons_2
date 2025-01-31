@@ -6,13 +6,16 @@ import backend.Tiles.Player;
 import backend.Tiles.Unit;
 import backend.Tiles.Wall;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class MapManager {
+    public static final String LEVEL_FILE_DIR = "levels_dir\\levels_dir\\";
     protected ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<Wall> walls = new ArrayList<>();
     public Player player;
-    private UnitFactory unitFactory = new UnitFactory();
+    private final UnitFactory unitFactory = new UnitFactory();
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
@@ -22,6 +25,8 @@ public class MapManager {
     public MapManager(Player player){
         this.player = player;
     }
+
+
 
     public void addGameObject(char object, Position position){
         switch (object){

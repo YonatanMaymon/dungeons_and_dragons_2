@@ -41,7 +41,7 @@ public class Player extends Unit{
     protected ArrayList<Enemy> getHitList(int range){
         ArrayList<Enemy> hitList= new ArrayList<>();
         for (Enemy enemy : enemies){
-            if(get_position().distance_from(enemy.get_position())<range && enemy.isAlive){
+            if(get_position().distance_from(enemy.get_position())<=range && enemy.isAlive){
                 hitList.add(enemy);
             }
         }
