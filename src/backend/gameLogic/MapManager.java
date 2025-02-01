@@ -1,13 +1,9 @@
 package backend.gameLogic;
 
-import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Player;
-import backend.Tiles.Unit;
 import backend.Tiles.Wall;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class MapManager {

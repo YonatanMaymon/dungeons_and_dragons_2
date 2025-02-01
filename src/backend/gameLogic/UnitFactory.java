@@ -16,8 +16,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class UnitFactory {
-    private List<Supplier<Player>> playersList;
-    private Map<Character, Supplier<Enemy>> enemiesMap;
+    private final List<Supplier<Player>> playersList;
+    private final Map<Character, Supplier<Enemy>> enemiesMap;
     private Player selected;
 
     public Enemy get_enemy(char tile){return enemiesMap.get(tile).get();

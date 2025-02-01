@@ -9,10 +9,12 @@ public class Trap extends Enemy{
     private int _invisibilityTime;
     private int _tickCount;
     private boolean visible;
+    private char originTile;
     public Trap(char tile,String name, int healthPool, int attackPoints, int defencePoints, int exp_value, int visibilityTime,int invisibilityTime) {
         super( tile, name,  healthPool, attackPoints, defencePoints, exp_value);
         _visibilityTime = visibilityTime;
         _invisibilityTime = invisibilityTime;
+        originTile = tile;
     }
 
     @Override
@@ -24,6 +26,8 @@ public class Trap extends Enemy{
     public void update() {
         super.update();
         visible = _tickCount<_visibilityTime;
+        if(visible) set_tile(originTile);
+        else set_tile('.');
         if(_tickCount == _visibilityTime +_invisibilityTime)
             _tickCount =0;
         else _tickCount++;

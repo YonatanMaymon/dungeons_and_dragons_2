@@ -20,7 +20,7 @@ public class Tile {
         return _tile;
     }
 
-    void set_tile(char tile){_tile = tile;}
+    protected void set_tile(char tile){_tile = tile;}
 
     public Position get_position() {
         return _position;

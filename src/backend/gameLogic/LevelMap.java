@@ -20,16 +20,16 @@ import java.util.function.Consumer;
 
 public class LevelMap extends MapManager {
     UnitMovement unitMovement = new UnitMovement(this);
+    public TileMap tileMap;
+    int num_col=0;
+    int num_row=0;
+    private String level_dir = LEVEL_FILE_DIR + "level";
+    public boolean levelPlaying = true;
     public Consumer<BattleData> onCombat;
     public Consumer<AbilityUseData> onAbilityUse;
     public Consumer<String> onDeath;
     public Consumer<MapAndStats> onMapAndStatsUpdate;
-    private String level_dir = LEVEL_FILE_DIR + "level";
-    int num_col=0;
-    int num_row=0;
-    public TileMap tileMap;
     private final PlayerStatExtractor playerStatExtractor = new PlayerStatExtractor();
-    public boolean levelPlaying = true;
 
     public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath, Consumer<MapAndStats> onMapAndStatsUpdate) throws IOException {
         super(player);
