@@ -29,14 +29,15 @@ public class Warrior extends Player {
     public void on_ability_cast(){
         int damage = health.get_resource_pool()/10;
         ArrayList<Enemy> hitList= getHitList(3);
-        if (hitList.isEmpty()) return;
-        Enemy enemyToAttack = get_random_enemy(hitList);
-        enemyToAttack.take_damage(damage);
+        Map<String,Integer> damageMap= new HashMap<>();
+        if (!hitList.isEmpty()) {
+            Enemy enemyToAttack = get_random_enemy(hitList);
+            enemyToAttack.take_damage(damage);
+            damageMap.put(enemyToAttack.get_name(), damage);
+
+        }
         health.heal(10* this.get_defencePoints());
         ability_cooldown.on_ability_use();
-
-        Map<String,Integer> damageMap= new HashMap<>();
-        damageMap.put(enemyToAttack.get_name(), damage);
         onAbilityUse.accept(new AbilityUseData("Avenger’s Shield",damageMap));
     }
 

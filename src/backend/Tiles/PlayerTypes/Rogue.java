@@ -45,13 +45,13 @@ public class Rogue extends Player {
     @Override
     public void on_ability_cast() {
         ArrayList<Enemy> hitList = getHitList(2);
-        if (hitList.isEmpty()) return;
         Map<String,Integer> damageMap = new HashMap<>();
-        for(Enemy enemy :hitList){
-            int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());
-            enemy.take_damage(damage);
-            damageMap.put(enemy.get_name(),damage);
-        }
+        if (!hitList.isEmpty())
+            for(Enemy enemy :hitList){
+                int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());
+                enemy.take_damage(damage);
+                damageMap.put(enemy.get_name(),damage);
+            }
         onAbilityUse.accept(new AbilityUseData("fan of knives",damageMap));
         energy.supplement_resource(_cost);
     }

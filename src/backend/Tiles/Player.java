@@ -6,6 +6,7 @@ import backend.Util;
 import backend.gameLogic.Position;
 import data_records.AbilityUseData;
 import enums.DIRECTION;
+import exeptions.InsufficientResourcesException;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -58,11 +59,9 @@ public class Player extends Unit{
     public void setEnemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
     }
-
     public boolean has_resources_for_ability(){
         return false;
     }
-
     public void on_ability_cast(){}
 
     public Position get_next_position(char input){
@@ -77,7 +76,7 @@ public class Player extends Unit{
             on_ability_cast();
             return;
         }
-        System.out.println("you dont have the resources to cast this ability");
+        throw new InsufficientResourcesException();
     }
 
     int get_xp_threshold(){return 50 * this._lvl;}

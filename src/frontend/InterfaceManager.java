@@ -57,9 +57,12 @@ public class InterfaceManager {
     public static void print_ability_use_log(AbilityUseData data){
         printSeparatingLine();
         println("you casted " + data.name());
+        if (data.damageMap().isEmpty())
+            println("no enemies in range");
         for(String name: data.damageMap().keySet()){
             println_dashed(name+" got hit for " + data.damageMap().get(name));
         }
+        printSeparatingLine();
         sleep();
     }
     public static void print_combat_log(BattleData bd){

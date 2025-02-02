@@ -2,6 +2,7 @@ import backend.Tiles.Player;
 import backend.Util;
 import backend.gameLogic.UnitFactory;
 import backend.gameLogic.LevelMap;
+import exeptions.InsufficientResourcesException;
 import frontend.AlertsHandler;
 import frontend.InterfaceManager;
 
@@ -36,7 +37,11 @@ public class GameManager {
                     );
             map.loudMap();
             while (map.levelPlaying){
-                map.update();
+                try {
+                    map.update();
+                }catch (InsufficientResourcesException e){
+                    AlertsHandler.print_exception(e);
+                }
             }
 
         } catch (IOException e) {
