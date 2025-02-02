@@ -8,6 +8,7 @@ import data_records.AbilityUseData;
 import java.util.*;
 
 public class Warrior extends Player {
+    private int range = 3;
     Cooldown ability_cooldown;
 
     public Warrior(String name, int healthPool, int attackPoints, int defencePoints, int ability_cooldown) {
@@ -28,7 +29,7 @@ public class Warrior extends Player {
     @Override
     public void on_ability_cast(){
         int damage = health.get_resource_pool()/10;
-        ArrayList<Enemy> hitList= getHitList(3);
+        ArrayList<Enemy> hitList= getHitList(range);
         Map<String,Integer> damageMap= new HashMap<>();
         if (!hitList.isEmpty()) {
             Enemy enemyToAttack = get_random_enemy(hitList);
@@ -53,5 +54,9 @@ public class Warrior extends Player {
         this.health.increase_health_pool(5*this.get_lvl());
         this.add_attackPoints(2*this.get_lvl());
         this.add_defencePoints(this.get_lvl());
+    }
+
+    public int getRange() {
+        return range;
     }
 }

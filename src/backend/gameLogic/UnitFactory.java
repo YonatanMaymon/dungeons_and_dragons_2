@@ -4,6 +4,7 @@ import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
 import backend.Tiles.Player;
+import backend.Tiles.PlayerTypes.Hunter;
 import backend.Tiles.PlayerTypes.Mage;
 import backend.Tiles.PlayerTypes.Rogue;
 import backend.Tiles.PlayerTypes.Warrior;
@@ -59,7 +60,8 @@ public class UnitFactory {
                 () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6),
                 () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 20, 3, 4),
                 () -> new Rogue("Arya Stark", 150, 40, 2, 20),
-                () -> new Rogue("Bronn", 250, 35, 3, 50)
+                () -> new Rogue("Bronn", 250, 35, 3, 50),
+                () -> new Hunter("Ygritte", 220, 30, 2, 6)
         );
     }
 

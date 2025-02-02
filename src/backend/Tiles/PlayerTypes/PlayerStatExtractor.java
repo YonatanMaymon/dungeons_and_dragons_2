@@ -33,6 +33,7 @@ public class PlayerStatExtractor implements PlayersVisitor{
     public Map<String, Integer> visit_warrior(Warrior warrior) {
         LinkedHashMap<String,Integer> stats = get_basic_stats(warrior);
         stats.put("cooldown",warrior.ability_cooldown.get_cooldown());
+        stats.put("range", warrior.getRange());
         return stats;
     }
 
@@ -40,7 +41,16 @@ public class PlayerStatExtractor implements PlayersVisitor{
     public Map<String, Integer> visit_rogue(Rogue rogue) {
         LinkedHashMap<String,Integer> stats = get_basic_stats(rogue);
         stats.put("energy", rogue.energy.get_resource_amount());
-        stats.put("cost", rogue._cost);
+        stats.put("cost", rogue.getCost());
+        stats.put("range", rogue.getRange());
+        return stats;
+    }
+
+    @Override
+    public Map<String, Integer> visit_hunter(Hunter hunter) {
+        LinkedHashMap<String,Integer> stats = get_basic_stats(hunter);
+        stats.put("arrows", hunter.getArrowCount());
+        stats.put("range",hunter.getRange());
         return stats;
     }
 }
