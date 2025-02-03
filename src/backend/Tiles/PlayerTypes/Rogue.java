@@ -11,11 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Rogue extends Player {
-    int _cost;
+    private int cost;
+    private int range = 2;
     Energy energy;
     public Rogue(String name,  int healthPool, int attackPoints, int defencePoints, int _cost) {
         super(name,  healthPool, attackPoints, defencePoints);
-        this._cost = _cost;
+        this.cost = _cost;
         energy = new Energy();
     }
 
@@ -39,20 +40,28 @@ public class Rogue extends Player {
 
     @Override
     public boolean has_resources_for_ability() {
-        return energy.get_resource_amount() - _cost >=0;
+        return energy.get_resource_amount() - cost >=0;
     }
 
     @Override
     public void on_ability_cast() {
-        ArrayList<Enemy> hitList = getHitList(2);
+        ArrayList<Enemy> hitList = getHitList(range);
         Map<String,Integer> damageMap = new HashMap<>();
         if (!hitList.isEmpty())
             for(Enemy enemy :hitList){
                 int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());
-                enemy.take_damage(damage);
+                damage = enemy.take_damage(damage);
                 damageMap.put(enemy.get_name(),damage);
             }
         onAbilityUse.accept(new AbilityUseData("fan of knives",damageMap));
-        energy.supplement_resource(_cost);
+        energy.supplement_resource(cost);
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getRange() {
+        return range;
     }
 }

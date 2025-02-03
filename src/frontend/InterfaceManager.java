@@ -56,7 +56,7 @@ public class InterfaceManager {
 
     public static void print_ability_use_log(AbilityUseData data){
         printSeparatingLine();
-        println("you casted " + data.name());
+        println(data.name() + "has been casted");
         if (data.damageMap().isEmpty())
             println("no enemies in range");
         for(String name: data.damageMap().keySet()){

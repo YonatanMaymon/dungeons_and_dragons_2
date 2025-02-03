@@ -57,7 +57,7 @@ public class Mage extends Player {
             Enemy enemyToAttack = get_random_enemy(hitList);
 
             int damage = _spell_power - Util.roll(enemyToAttack.get_defencePoints());
-            enemyToAttack.take_damage(damage);
+            damage = enemyToAttack.take_damage(damage);
             if (!enemyToAttack.isAlive) hitList.remove(enemyToAttack);
             damageMap.put(enemyToAttack.get_name(),damage);
             hits++;

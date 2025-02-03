@@ -1,9 +1,11 @@
 package backend.gameLogic;
 
+import backend.Tiles.Enemies.Boss;
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
 import backend.Tiles.Player;
+import backend.Tiles.PlayerTypes.Hunter;
 import backend.Tiles.PlayerTypes.Mage;
 import backend.Tiles.PlayerTypes.Rogue;
 import backend.Tiles.PlayerTypes.Warrior;
@@ -39,9 +41,9 @@ public class UnitFactory {
                 () -> new Monster('b', "Bear-Wright", 1000, 75, 30, 4, 250),
                 () -> new Monster('g', "Giant-Wright", 1500, 100, 40, 5, 500),
                 () -> new Monster('w', "White Walker", 2000, 150, 50, 6, 1000),
-                () -> new Monster('M', "The Mountain", 1000, 60, 25, 6, 500),
-                () -> new Monster('C', "Queen Cersei", 100, 10, 10, 1, 1000),
-                () -> new Monster('K', "Night's King", 5000, 300, 150, 8, 5000),
+                () -> new Boss('M', "The Mountain", 1000, 60, 25, 6, 5,500),
+                () -> new Boss('C', "Queen Cersei", 100, 10, 10, 1,8, 1000),
+                () -> new Boss('K', "Night's King", 5000, 300, 150, 8, 3,5000),
 
                 // Traps
                 () -> new Trap('B', "Bonus Trap", 1, 1, 1, 250, 1, 5),
@@ -59,7 +61,8 @@ public class UnitFactory {
                 () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6),
                 () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 20, 3, 4),
                 () -> new Rogue("Arya Stark", 150, 40, 2, 20),
-                () -> new Rogue("Bronn", 250, 35, 3, 50)
+                () -> new Rogue("Bronn", 250, 35, 3, 50),
+                () -> new Hunter("Ygritte", 220, 30, 2, 6)
         );
     }
 

@@ -45,9 +45,11 @@ public class Unit extends Tile{
         set_tile('.');
     }
 
-    public void take_damage(int damage){
-        health.take_damage(damage);
+    public int take_damage(int damage){
+        int damageTaken = Math.max(damage,0);
+        health.take_damage(damageTaken);
         if (health.get_resource_amount() <= 0){on_death();}
+        return damageTaken;
     }
 
     public BattleData on_attack(Unit attacker){

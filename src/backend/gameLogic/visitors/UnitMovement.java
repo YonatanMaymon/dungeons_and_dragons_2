@@ -1,6 +1,7 @@
 package backend.gameLogic.visitors;
 
 import backend.Tiles.*;
+import backend.Tiles.Enemies.Boss;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
 import backend.gameLogic.LevelMap;
@@ -42,8 +43,17 @@ public class UnitMovement implements Visitor {
     }
 
     @Override
+    public void visit_boss(Boss boss) {
+        if(is_dead(boss)) return;
+        Interact interact = new Interact(map, boss);
+        Position new_pos = boss.get_next_position(map.player);
+        map.tileMap.getTile(new_pos).accept(interact);
+    }
+
+    @Override
     public void visit_tile(Tile tile) {}
 
     @Override
     public void visit_wall(Wall wall) {}
+
 }

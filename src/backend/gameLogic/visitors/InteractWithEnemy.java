@@ -1,6 +1,7 @@
 package backend.gameLogic.visitors;
 
 import backend.Tiles.*;
+import backend.Tiles.Enemies.Boss;
 import backend.Tiles.Enemies.Enemy;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
@@ -28,4 +29,6 @@ public class InteractWithEnemy implements Visitor {
     public void visit_tile(Tile tile) {}
     @Override
     public void visit_wall(Wall wall) {}
+    @Override
+    public void visit_boss(Boss boss) {}
 }
