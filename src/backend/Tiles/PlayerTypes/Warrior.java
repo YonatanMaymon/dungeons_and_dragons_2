@@ -33,7 +33,7 @@ public class Warrior extends Player {
         Map<String,Integer> damageMap= new HashMap<>();
         if (!hitList.isEmpty()) {
             Enemy enemyToAttack = get_random_enemy(hitList);
-            enemyToAttack.take_damage(damage);
+            damage = enemyToAttack.take_damage(damage);
             damageMap.put(enemyToAttack.get_name(), damage);
 
         }

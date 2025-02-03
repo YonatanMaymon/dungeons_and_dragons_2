@@ -9,11 +9,12 @@ import enums.DIRECTION;
 import exeptions.InsufficientResourcesException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class Player extends Unit{
+public class Player extends Unit implements HeroicUnit{
     int _xp;
     int _lvl;
     protected Consumer<AbilityUseData> onAbilityUse = (AbilityUseData)->{};
@@ -59,10 +60,12 @@ public class Player extends Unit{
     public void setEnemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
     }
-    public boolean has_resources_for_ability(){
-        return false;
+    public void on_boss_ability_cast(int damage){
+        damage = take_damage(damage);
+        HashMap <String,Integer> damageMap = new HashMap<>();
+        damageMap.put(get_name(),damage);
+        onAbilityUse.accept(new AbilityUseData("Boss Ability", damageMap));
     }
-    public void on_ability_cast(){}
 
     public Position get_next_position(char input){
         DIRECTION direction = Util.input_interpreter(input);
@@ -70,7 +73,10 @@ public class Player extends Unit{
         else if(direction == DIRECTION.CAST_ABILITY) cast_ability();
         return get_next_position(direction);
     }
-
+    public void on_ability_cast(){}
+    public boolean has_resources_for_ability(){
+        return false;
+    }
     public void cast_ability(){
         if (has_resources_for_ability()){
             on_ability_cast();

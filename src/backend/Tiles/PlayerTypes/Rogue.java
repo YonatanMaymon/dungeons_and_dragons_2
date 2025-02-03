@@ -50,7 +50,7 @@ public class Rogue extends Player {
         if (!hitList.isEmpty())
             for(Enemy enemy :hitList){
                 int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());
-                enemy.take_damage(damage);
+                damage = enemy.take_damage(damage);
                 damageMap.put(enemy.get_name(),damage);
             }
         onAbilityUse.accept(new AbilityUseData("fan of knives",damageMap));

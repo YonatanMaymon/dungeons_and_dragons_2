@@ -2,6 +2,7 @@ import backend.Tiles.Player;
 import backend.Util;
 import backend.gameLogic.UnitFactory;
 import backend.gameLogic.LevelMap;
+import exeptions.DebugException;
 import exeptions.InsufficientResourcesException;
 import frontend.AlertsHandler;
 import frontend.InterfaceManager;
@@ -46,6 +47,8 @@ public class GameManager {
 
         } catch (IOException e) {
             AlertsHandler.on_level_map_file_corruption(level);
+        } catch (DebugException e){
+            AlertsHandler.print_exception(e);
         }
     }
 

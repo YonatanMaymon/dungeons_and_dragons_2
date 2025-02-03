@@ -38,7 +38,7 @@ public class Hunter extends Player {
                     enemyToAttack = enemy;
             }
             int damage = get_attackPoints() - Util.roll(enemyToAttack.get_defencePoints());
-            enemyToAttack.take_damage(damage);
+            damage = enemyToAttack.take_damage(damage);
             Map<String,Integer> damageMap = new HashMap<>();
             damageMap.put(enemyToAttack.get_name(),damage);
             onAbilityUse.accept(new AbilityUseData("fan of knives",damageMap));

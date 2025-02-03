@@ -2,6 +2,7 @@ package backend;
 
 import backend.gameLogic.MapManager;
 import enums.DIRECTION;
+import exeptions.DebugException;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -18,6 +19,7 @@ public class Util {
             case 'w' -> DIRECTION.UP;
             case 'q' -> DIRECTION.STAY;
             case 'e' -> DIRECTION.CAST_ABILITY;
+            case 'n' -> throw new DebugException("skipping Level");
             default -> null;
         };
     }

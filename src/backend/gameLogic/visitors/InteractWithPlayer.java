@@ -1,5 +1,6 @@
 package backend.gameLogic.visitors;
 
+import backend.Tiles.Enemies.Boss;
 import backend.Tiles.Enemies.Monster;
 import backend.Tiles.Enemies.Trap;
 import backend.Tiles.Player;
@@ -19,12 +20,16 @@ public class InteractWithPlayer implements Visitor {
     @Override
     public void visit_monster(Monster monster) {
         map.onCombat.accept(player.on_attack(monster));
-
     }
 
     @Override
     public void visit_trap(Trap trap) {
         map.onCombat.accept(player.on_attack(trap));
+    }
+
+    @Override
+    public void visit_boss(Boss boss) {
+        map.onCombat.accept(player.on_attack(boss));
     }
 
     @Override
