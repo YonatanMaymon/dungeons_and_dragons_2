@@ -12,17 +12,17 @@ import java.util.Map;
 
 public class Mage extends Player {
     Mana mana;
-    int _mana_cost;
-    int _spell_power;
-    int _hits_count;
-    int _ability_range;
-    public Mage(String name, int healthPool, int attackPoints, int defencePoints, int mana_pool, int _mana_cost, int _hits_count, int _spell_power, int _ability_range) {
+    private int spellPower;
+    private final int manaCost;
+    private final int hitsCount;
+    private final int abilityRange;
+    public Mage(String name, int healthPool, int attackPoints, int defencePoints, int mana_pool, int manaCost, int hitsCount, int spellPower, int abilityRange) {
         super(name, healthPool, attackPoints, defencePoints);
         this.mana = new Mana(mana_pool);
-        this._mana_cost = _mana_cost;
-        this._spell_power = _spell_power;
-        this._hits_count=_hits_count;
-        this._ability_range = _ability_range;
+        this.manaCost = manaCost;
+        this.spellPower = spellPower;
+        this.hitsCount = hitsCount;
+        this.abilityRange = abilityRange;
     }
 
     @Override
@@ -33,36 +33,52 @@ public class Mage extends Player {
     @Override
     public void on_lvl_up(){
         super.on_lvl_up();
-        mana.increase_mana_pool(25*get_lvl());
-        _spell_power += 10*get_lvl();
+        mana.increase_mana_pool(25* getLvl());
+        spellPower += 10* getLvl();
     }
 
     @Override
     public void update() {
         super.update();
-        mana.replenish_resource(get_lvl());
+        mana.replenish_resource(getLvl());
     }
 
     @Override
     public boolean has_resources_for_ability() {
-        return mana.get_resource_amount()>=_mana_cost;
+        return mana.get_resource_amount()>= manaCost;
     }
 
     @Override
     public void on_ability_cast() {
         int hits = 0;
-        ArrayList<Enemy> hitList = getHitList(_ability_range);
+        ArrayList<Enemy> hitList = get_hit_list(abilityRange);
         Map<String,Integer> damageMap = new HashMap<>();
-        while(hits<_hits_count && !hitList.isEmpty()){
+        while(hits< hitsCount && !hitList.isEmpty()){
             Enemy enemyToAttack = get_random_enemy(hitList);
 
-            int damage = _spell_power - Util.roll(enemyToAttack.get_defencePoints());
+            int damage = spellPower - Util.roll(enemyToAttack.get_defence_points());
             damage = enemyToAttack.take_damage(damage);
             if (!enemyToAttack.isAlive) hitList.remove(enemyToAttack);
             damageMap.put(enemyToAttack.get_name(),damage);
             hits++;
         }
         onAbilityUse.accept(new AbilityUseData("Blizzard",damageMap));
-        mana.supplement_resource(_mana_cost);
+        mana.supplement_resource(manaCost);
+    }
+
+    public int get_mana_cost() {
+        return manaCost;
+    }
+
+    public int get_spell_power() {
+        return spellPower;
+    }
+
+    public int get_hits_count() {
+        return hitsCount;
+    }
+
+    public int get_ability_range() {
+        return abilityRange;
     }
 }

@@ -34,7 +34,7 @@ public class Boss extends Enemy implements HeroicUnit {
 
     @Override
     public void on_ability_cast() {
-        int damage = get_attackPoints() - Util.roll(player.get_defencePoints());
+        int damage = get_attack_points() - Util.roll(player.get_defence_points());
         player.on_boss_ability_cast(damage);
     }
 

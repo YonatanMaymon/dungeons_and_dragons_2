@@ -15,7 +15,7 @@ public class GameManager {
         UnitFactory unitFactory = new UnitFactory();
         int playerNum = 0;
         try {
-            playerNum = InterfaceManager.choose_character(unitFactory.listPlayers());
+            playerNum = InterfaceManager.choose_character(unitFactory.list_players());
         } catch (RuntimeException e) {
             AlertsHandler.print_exception(e);
             game_loop();
@@ -36,7 +36,7 @@ public class GameManager {
                             InterfaceManager::kill_msg,
                             InterfaceManager::print_map_and_stats
                     );
-            map.loudMap();
+            map.loud_map();
             while (map.levelPlaying){
                 try {
                     map.update();

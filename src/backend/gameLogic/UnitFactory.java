@@ -27,11 +27,11 @@ public class UnitFactory {
     public Player get_player(int num){return playersList.get(num).get();}
 
     public UnitFactory(){
-        playersList = initPlayers();
-        enemiesMap = initEnemies();
+        playersList = init_players();
+        enemiesMap = init_enemies();
     }
 
-    private Map<Character, Supplier<Enemy>> initEnemies() {
+    private Map<Character, Supplier<Enemy>> init_enemies() {
         List<Supplier<Enemy>> enemies = Arrays.asList(
                 // Monsters
                 () -> new Monster('s', "Lannister Soldier", 80, 8, 3, 3, 25),
@@ -54,7 +54,7 @@ public class UnitFactory {
         return enemies.stream().collect(Collectors.toMap(s -> s.get().get_tile(), Function.identity()));
     }
 
-    private List<Supplier<Player>> initPlayers() {
+    private List<Supplier<Player>> init_players() {
         return Arrays.asList(
                 () -> new Warrior("Jon Snow", 300, 30, 4, 3),
                 () -> new Warrior("The Hound", 400, 20, 6, 5),
@@ -66,7 +66,7 @@ public class UnitFactory {
         );
     }
 
-    public List<Player> listPlayers(){
+    public List<Player> list_players(){
         return playersList.stream().map(Supplier::get).collect(Collectors.toList());
     }
 

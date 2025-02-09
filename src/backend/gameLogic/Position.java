@@ -1,12 +1,12 @@
 package backend.gameLogic;
 
 public class Position {
-    private int _x;
-    private int _y;
+    private int x;
+    private int y;
     public Position(){}
     public Position(int x, int y){
-        this._x = x;
-        this._y = y;
+        this.x = x;
+        this.y = y;
     }
 
     public double distance_from(Position target){
@@ -16,25 +16,25 @@ public class Position {
     }
 
     public int get_x() {
-        return _x;
+        return x;
     }
     public int get_y() {
-        return _y;
+        return y;
     }
 
-    public void setPosition (Position newPosition){
-        _x = newPosition.get_x();
-        _y = newPosition.get_y();
+    public void set_position(Position newPosition){
+        x = newPosition.get_x();
+        y = newPosition.get_y();
     }
 
 
     public void move(int x, int y){
-        this._x += x;
-        this._y += y;
+        this.x += x;
+        this.y += y;
     }
 
     public boolean compare_value(Position position){
-        return _x == position.get_x()&& _y == position.get_y();
+        return x == position.get_x()&& y == position.get_y();
     }
 
 }

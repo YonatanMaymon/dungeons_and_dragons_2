@@ -22,7 +22,7 @@ public class UnitMovement implements Visitor {
         if(is_dead(monster)) return;
         Interact interact = new Interact(map, monster);
         Position new_pos = monster.get_next_position(map.player);
-        map.tileMap.getTile(new_pos).accept(interact);
+        map.tileMap.get_tile(new_pos).accept(interact);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class UnitMovement implements Visitor {
         Interact interact = new Interact(map, player);
         char input = UI.get_player_input();
         Position new_pos = player.get_next_position(input);
-        map.tileMap.getTile(new_pos).accept(interact);
+        map.tileMap.get_tile(new_pos).accept(interact);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UnitMovement implements Visitor {
         if(is_dead(boss)) return;
         Interact interact = new Interact(map, boss);
         Position new_pos = boss.get_next_position(map.player);
-        map.tileMap.getTile(new_pos).accept(interact);
+        map.tileMap.get_tile(new_pos).accept(interact);
     }
 
     @Override

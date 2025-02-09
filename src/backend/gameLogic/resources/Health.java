@@ -3,7 +3,7 @@ package backend.gameLogic.resources;
 public class Health extends Resource {
     public Health(int healthPool){
         super(healthPool);
-        this.fill_resource();
+        fill_resource();
     }
 
     public void increase_health_pool(int amount){

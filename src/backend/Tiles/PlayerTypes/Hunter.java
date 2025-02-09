@@ -13,6 +13,7 @@ public class Hunter extends Player {
     private final int range;
     private int arrowCount = 10;
     private int tickCount = 0;
+
     public Hunter(String name, int healthPool, int attackPoints, int defencePoints, int range) {
         super(name, healthPool, attackPoints, defencePoints);
         this.range = range;
@@ -28,7 +29,7 @@ public class Hunter extends Player {
 
     @Override
     public void on_ability_cast() {
-        ArrayList<Enemy> hitList = getHitList(range);
+        ArrayList<Enemy> hitList = get_hit_list(range);
         if(!hitList.isEmpty()) {
             arrowCount -= 1;
             Enemy enemyToAttack = hitList.getFirst();
@@ -37,7 +38,7 @@ public class Hunter extends Player {
                         < enemyToAttack.get_position().distance_from(get_position()))
                     enemyToAttack = enemy;
             }
-            int damage = get_attackPoints() - Util.roll(enemyToAttack.get_defencePoints());
+            int damage = get_attack_points() - Util.roll(enemyToAttack.get_defence_points());
             damage = enemyToAttack.take_damage(damage);
             Map<String,Integer> damageMap = new HashMap<>();
             damageMap.put(enemyToAttack.get_name(),damage);
@@ -48,26 +49,26 @@ public class Hunter extends Player {
     @Override
     public void on_lvl_up() {
         super.on_lvl_up();
-        arrowCount += get_lvl()*10;
-        add_attackPoints(2*get_lvl());
-        add_defencePoints(get_lvl());
+        arrowCount += getLvl()*10;
+        add_attack_points(2* getLvl());
+        add_defence_points(getLvl());
     }
 
     @Override
     public void update() {
         super.update();
         if(tickCount == 10){
-            arrowCount += get_lvl();
+            arrowCount += getLvl();
             tickCount = 0;
         }
         else tickCount++;
     }
 
-    public int getRange() {
+    public int get_range() {
         return range;
     }
 
-    public int getArrowCount() {
+    public int get_arrow_count() {
         return arrowCount;
     }
 

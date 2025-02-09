@@ -8,24 +8,24 @@ import enums.DIRECTION;
 
 public class Unit extends Tile{
     public boolean isAlive = true;
-    private final String _name;
+    private final String name;
     public Health health;
-    private int _attackPoints;
-    private int _defencePoints;
+    private int attackPoints;
+    private int defencePoints;
 
     public Unit(String name, char tile, int healthPool, int attackPoints, int defencePoints) {
         super( tile);
-        this._name =name;
+        this.name =name;
         this.health = new Health(healthPool);
-        this._attackPoints = attackPoints;
-        this._defencePoints = defencePoints;
+        this.attackPoints = attackPoints;
+        this.defencePoints = defencePoints;
     }
 
     public void update(){}
 
     public Position get_next_position(DIRECTION direction){
         Position nextPosition = new Position();
-        nextPosition.setPosition( _position);
+        nextPosition.set_position(position);
         switch (direction) {
             case DIRECTION.LEFT->
                 nextPosition.move(-1,0);
@@ -53,29 +53,29 @@ public class Unit extends Tile{
     }
 
     public BattleData on_attack(Unit attacker){
-        int attackRoll = Util.roll(attacker.get_attackPoints());
-        int defenceRoll = Util.roll(get_defencePoints());
+        int attackRoll = Util.roll(attacker.get_attack_points());
+        int defenceRoll = Util.roll(get_defence_points());
         int damageTaken = Math.max(0,attackRoll-defenceRoll);
         take_damage(damageTaken);
         return new BattleData
-                (attacker.get_name(),get_name(),attackRoll,defenceRoll, health.get_resource_amount());
+                (attacker.get_name(), get_name(),attackRoll,defenceRoll, health.get_resource_amount());
     }
 
-    public int get_attackPoints() {
-        return _attackPoints;
+    public int get_attack_points() {
+        return attackPoints;
     }
 
-    public void add_attackPoints(int amount) {
-        this._attackPoints += amount;
+    public void add_attack_points(int amount) {
+        this.attackPoints += amount;
     }
 
-    public int get_defencePoints() {
-        return _defencePoints;
+    public int get_defence_points() {
+        return defencePoints;
     }
 
-    public void add_defencePoints(int amount) {
-        this._defencePoints += amount;
+    public void add_defence_points(int amount) {
+        this.defencePoints += amount;
     }
 
-    public String get_name() {return _name;}
+    public String get_name() {return name;}
 }

@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Rogue extends Player {
-    private int cost;
-    private int range = 2;
+    private final int cost;
+    private final int RANGE = 2;
     Energy energy;
-    public Rogue(String name,  int healthPool, int attackPoints, int defencePoints, int _cost) {
+    public Rogue(String name,  int healthPool, int attackPoints, int defencePoints, int cost) {
         super(name,  healthPool, attackPoints, defencePoints);
-        this.cost = _cost;
+        this.cost = cost;
         energy = new Energy();
     }
 
@@ -29,7 +29,7 @@ public class Rogue extends Player {
     public void on_lvl_up() {
         super.on_lvl_up();
         energy.fill_resource();
-        add_attackPoints(3*get_lvl());
+        add_attack_points(3* getLvl());
     }
 
     @Override
@@ -45,11 +45,11 @@ public class Rogue extends Player {
 
     @Override
     public void on_ability_cast() {
-        ArrayList<Enemy> hitList = getHitList(range);
+        ArrayList<Enemy> hitList = get_hit_list(RANGE);
         Map<String,Integer> damageMap = new HashMap<>();
         if (!hitList.isEmpty())
             for(Enemy enemy :hitList){
-                int damage = get_attackPoints() - Util.roll(enemy.get_defencePoints());
+                int damage = get_attack_points() - Util.roll(enemy.get_defence_points());
                 damage = enemy.take_damage(damage);
                 damageMap.put(enemy.get_name(),damage);
             }
@@ -57,11 +57,11 @@ public class Rogue extends Player {
         energy.supplement_resource(cost);
     }
 
-    public int getCost() {
+    public int get_cost() {
         return cost;
     }
 
-    public int getRange() {
-        return range;
+    public int get_range() {
+        return RANGE;
     }
 }

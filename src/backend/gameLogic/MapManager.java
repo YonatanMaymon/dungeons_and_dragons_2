@@ -13,18 +13,16 @@ public class MapManager {
     public Player player;
     private final UnitFactory unitFactory = new UnitFactory();
 
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
-    }
-    public ArrayList<Wall> getWalls(){return walls;}
-
     public MapManager(Player player){
         this.player = player;
     }
 
+    public ArrayList<Enemy> get_enemies() {
+        return enemies;
+    }
+    public ArrayList<Wall> get_walls(){return walls;}
 
-
-    public void addGameObject(char object, Position position){
+    public void add_game_object(char object, Position position){
         switch (object){
             case '@'->
                 player.set_position(position);

@@ -5,15 +5,14 @@ import backend.Tiles.Visitor;
 import backend.gameLogic.Position;
 
 public class Trap extends Enemy{
-    private int _visibilityTime;
-    private int _invisibilityTime;
-    private int _tickCount;
-    private boolean visible;
-    private char originTile;
+    private final int visibilityTime;
+    private final int invisibilityTime;
+    private final char originTile;
+    private int tickCount;
     public Trap(char tile,String name, int healthPool, int attackPoints, int defencePoints, int exp_value, int visibilityTime,int invisibilityTime) {
         super( tile, name,  healthPool, attackPoints, defencePoints, exp_value);
-        _visibilityTime = visibilityTime;
-        _invisibilityTime = invisibilityTime;
+        this.visibilityTime = visibilityTime;
+        this.invisibilityTime = invisibilityTime;
         originTile = tile;
     }
 
@@ -25,12 +24,12 @@ public class Trap extends Enemy{
     @Override
     public void update() {
         super.update();
-        visible = _tickCount<_visibilityTime;
+        boolean visible = tickCount < visibilityTime;
         if(visible) set_tile(originTile);
         else set_tile('.');
-        if(_tickCount == _visibilityTime +_invisibilityTime)
-            _tickCount =0;
-        else _tickCount++;
+        if(tickCount == visibilityTime + invisibilityTime)
+            tickCount =0;
+        else tickCount++;
 
     }
 

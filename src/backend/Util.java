@@ -36,6 +36,7 @@ public class Util {
         File dir = new File(MapManager.LEVEL_FILE_DIR);
         File [] listOfFiles = dir.listFiles();
         int max_lvl = 0;
+        assert listOfFiles != null;
         for (File file : listOfFiles){
             if(file.isFile()&& file.getName().contains("level")) {
                 max_lvl++;

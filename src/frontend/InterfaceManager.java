@@ -1,7 +1,6 @@
 package frontend;
 
 import backend.Tiles.Player;
-import backend.Tiles.Tile;
 import data_records.AbilityUseData;
 import data_records.BattleData;
 import data_records.MapAndStats;
@@ -23,19 +22,19 @@ public class InterfaceManager {
 
     static void println(String string){System.out.println(string);}
     static void println_dashed(String string){System.out.println("--"+string+"--");}
-    static void printSeparatingLine(){println("--------------------------------------------------------------------------");}
+    static void print_separating_line(){println("--------------------------------------------------------------------------");}
 
     public static int choose_character(List<Player> playerList){
         println_dashed("CHARACTER SELECTION");
-        printSeparatingLine();
+        print_separating_line();
         int i = 0;
         for (Player player : playerList){
             String sb = i + "- "+player.get_name() + "- Health: " +
                     player.health.get_resource_pool() +
                     ", Attack: " +
-                    player.get_attackPoints() +
+                    player.get_attack_points() +
                     ", Defence: " +
-                    player.get_defencePoints();
+                    player.get_defence_points();
             println(sb);
             i++;
         }
@@ -55,31 +54,31 @@ public class InterfaceManager {
     }
 
     public static void print_ability_use_log(AbilityUseData data){
-        printSeparatingLine();
+        print_separating_line();
         println(data.name() + "has been casted");
         if (data.damageMap().isEmpty())
             println("no enemies in range");
         for(String name: data.damageMap().keySet()){
             println_dashed(name+" got hit for " + data.damageMap().get(name));
         }
-        printSeparatingLine();
+        print_separating_line();
         sleep();
     }
     public static void print_combat_log(BattleData bd){
-        printSeparatingLine();
+        print_separating_line();
         println(bd.attacker() + " is attacking "+bd.defender());
         println(bd.attacker() + " has rolled " + bd.attackRoll());
         println(bd.defender() + " has rolled "+ bd.defenceRoll());
         println(bd.defender() + " has taken " + bd.damage_taken()+" damage");
         println(bd.defender() + " remaining health: " + bd.remainingHealth());
-        printSeparatingLine();
+        print_separating_line();
         sleep();
     }
 
     public static void kill_msg(String name){
-        printSeparatingLine();
+        print_separating_line();
         println(name + " has been slayed");
-        printSeparatingLine();
+        print_separating_line();
         sleep();
     }
 }

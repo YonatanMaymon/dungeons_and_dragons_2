@@ -4,6 +4,7 @@ import backend.Tiles.Tile;
 
 public class TileMap {
     Tile[][] map;
+
     TileMap(int x, int y){
         map = new Tile[x][y];
         for(int i = 0; i<map.length; i++){
@@ -29,5 +30,5 @@ public class TileMap {
         int y = tile.get_position().get_y();
         map[y][x] = tile;
     }
-    public Tile getTile(Position position){return map[position.get_y()][position.get_x()];}
+    public Tile get_tile(Position position){return map[position.get_y()][position.get_x()];}
 }

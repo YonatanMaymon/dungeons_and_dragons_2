@@ -21,46 +21,46 @@ import java.util.function.Consumer;
 public class LevelMap extends MapManager {
     UnitMovement unitMovement = new UnitMovement(this);
     public TileMap tileMap;
-    int num_col=0;
-    int num_row=0;
-    private String level_dir = LEVEL_FILE_DIR + "level";
+    int numCol =0;
+    int numRow =0;
+    private String levelDir = LEVEL_FILE_DIR + "level";
     public boolean levelPlaying = true;
     public Consumer<BattleData> onCombat;
-    public Consumer<AbilityUseData> onAbilityUse;
-    public Consumer<String> onDeath;
-    public Consumer<MapAndStats> onMapAndStatsUpdate;
+    private final Consumer<AbilityUseData> onAbilityUse;
+    private final Consumer<String> onDeath;
+    private final Consumer<MapAndStats> onMapAndStatsUpdate;
     private final PlayerStatExtractor playerStatExtractor = new PlayerStatExtractor();
 
     public LevelMap(int level, Player player, Consumer<BattleData> onCombat, Consumer<AbilityUseData> onAbilityUse, Consumer<String> onDeath, Consumer<MapAndStats> onMapAndStatsUpdate) throws IOException {
         super(player);
-        level_dir+=level+ ".txt";
-        BufferedReader reader = new BufferedReader(new FileReader(level_dir));
+        levelDir +=level+ ".txt";
+        BufferedReader reader = new BufferedReader(new FileReader(levelDir));
         String line;
         while ((line = reader.readLine()) != null){
-            num_col = Math.max(num_col, line.length());
-            num_row++;
+            numCol = Math.max(numCol, line.length());
+            numRow++;
         }
-        tileMap = new TileMap(num_row,num_col);
+        tileMap = new TileMap(numRow, numCol);
         this.onCombat = onCombat;
         this.onAbilityUse = onAbilityUse;
         this.onDeath = onDeath;
         this.onMapAndStatsUpdate = onMapAndStatsUpdate;
     }
 
-    public void loudMap() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(level_dir));
+    public void loud_map() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(levelDir));
         String line;
         int j = 0;
         while ((line = reader.readLine()) != null){
             for(int i =0 ; i < line.length(); i++){
                 if(line.charAt(i) !='.')
-                    addGameObject(line.charAt(i),new Position(i,j));
+                    add_game_object(line.charAt(i),new Position(i,j));
             }
             j++;
         }
         reader.close();
-        player.setOnAbilityUse(onAbilityUse);
-        player.setEnemies(getEnemies());
+        player.set_on_ability_use(onAbilityUse);
+        player.set_enemies(getEnemies());
         for (Wall wall : getWalls()){tileMap.loud_tile_on_map(wall);}
         for (Enemy enemy : getEnemies()){tileMap.loud_tile_on_map(enemy);}
         tileMap.loud_tile_on_map(player);

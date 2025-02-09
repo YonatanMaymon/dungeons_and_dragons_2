@@ -15,21 +15,22 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 public class Player extends Unit implements HeroicUnit{
-    int _xp;
-    int _lvl;
+    private int xp;
+    private int lvl;
     protected Consumer<AbilityUseData> onAbilityUse = (AbilityUseData)->{};
     protected ArrayList<Enemy> enemies = new ArrayList<>();
 
     public Player(String name, int healthPool, int attackPoints, int defencePoints) {
         super(name, '@', healthPool, attackPoints, defencePoints);
-        this._lvl = 1;
-        this._xp = 0;
+        this.lvl = 1;
+        this.xp = 0;
     }
 
     @Override
     public void accept(Visitor visitor) {
         visitor.visit_player(this);
     }
+
     public Map<String,Integer> accept(PlayersVisitor visitor){return null;}
 
     @Override
@@ -38,7 +39,7 @@ public class Player extends Unit implements HeroicUnit{
         set_tile('X');
     }
 
-    protected ArrayList<Enemy> getHitList(int range){
+    protected ArrayList<Enemy> get_hit_list(int range){
         ArrayList<Enemy> hitList= new ArrayList<>();
         for (Enemy enemy : enemies){
             if(get_position().distance_from(enemy.get_position())<=range && enemy.isAlive){
@@ -53,11 +54,11 @@ public class Player extends Unit implements HeroicUnit{
         return hitList.get(random.nextInt(0,hitList.size()));
     }
 
-    public void setOnAbilityUse(Consumer<AbilityUseData> onAbilityUse) {
+    public void set_on_ability_use(Consumer<AbilityUseData> onAbilityUse) {
         this.onAbilityUse = onAbilityUse;
     }
 
-    public void setEnemies(ArrayList<Enemy> enemies) {
+    public void set_enemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
     }
     public void on_boss_ability_cast(int damage){
@@ -85,29 +86,29 @@ public class Player extends Unit implements HeroicUnit{
         throw new InsufficientResourcesException();
     }
 
-    int get_xp_threshold(){return 50 * this._lvl;}
+    int get_xp_threshold(){return 50 * this.lvl;}
 
     public void gain_xp(int amount){
-        this._xp += amount;
+        this.xp += amount;
         int xp_threshold = get_xp_threshold();
-        if (this._xp >=xp_threshold){
-            this._xp -= xp_threshold;
+        if (this.xp >=xp_threshold){
+            this.xp -= xp_threshold;
             lvl_up();
         }
     }
     void lvl_up(){
-        this._lvl ++;
+        this.lvl++;
         on_lvl_up();
     }
     public void on_lvl_up(){
-        this.health.increase_health_pool(10*this._lvl);
-        this.add_attackPoints(4*this._lvl);
-        this.add_defencePoints( this._lvl);
+        this.health.increase_health_pool(10*this.lvl);
+        this.add_attack_points(4*this.lvl);
+        this.add_defence_points( this.lvl);
     }
 
-    public int get_lvl() {
-        return _lvl;
+    public int getLvl() {
+        return lvl;
     }
 
-    public int get_xp_progress_percentage() {return 100 - (get_xp_threshold() - _xp) *100 /get_xp_threshold();}
+    public int get_xp_progress_percentage() {return 100 - (get_xp_threshold() - xp) *100 /get_xp_threshold();}
 }
